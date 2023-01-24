@@ -22,8 +22,7 @@ class NowPlayingComponent extends StatelessWidget {
   Widget build(BuildContext context) {
 
     FetchData fetchData = FetchData();
-    return Scaffold(
-        body: FutureBuilder(
+    return  FutureBuilder(
             future: fetchData.fetchData(),
             builder: (context,snapshot) {
               List<HomeMoviesModel>? movie = snapshot.data;
@@ -31,7 +30,7 @@ class NowPlayingComponent extends StatelessWidget {
                   snapshot.data == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator(),);
               }else if(snapshot.hasError){
-                return Center(child: Text("Something went wrong",style: TextStyle(color: Colors.red,fontSize: 30),));
+                return Center(child: Text("Something went wrong with now playing api",style: TextStyle(color: Colors.red,fontSize: 30),));
               }
               else {
                 return   FadeIn(
@@ -71,7 +70,7 @@ class NowPlayingComponent extends StatelessWidget {
                                 blendMode: BlendMode.dstIn,
                                 child: CachedNetworkImage(
                                   height: 560.0,
-                                  imageUrl: FetchData.imageUrl(item.backDropPath),
+                                  imageUrl: fetchData.imageUrl(item.backDropPath),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -132,7 +131,6 @@ class NowPlayingComponent extends StatelessWidget {
               //     }
               // );
             }
-        )
     );
 
   }

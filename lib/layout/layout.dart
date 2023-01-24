@@ -43,7 +43,7 @@ class _LayoutState extends State<Layout> {
         child: NavigationBar(
           labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
           height: 60,
-          animationDuration: Duration(seconds: 2),
+          animationDuration: Duration(seconds: 3),
           backgroundColor: AppColors.BGNBColor,
           selectedIndex: index,
           onDestinationSelected: (index){

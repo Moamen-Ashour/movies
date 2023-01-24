@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movie_application/home_components/home_model.dart';
+import 'package:movie_application/home_components/popular_model.dart';
+import 'package:movie_application/home_components/recomended_model.dart';
 
 class FetchData{
 
@@ -14,16 +16,16 @@ class FetchData{
    String nowPlayingMoviesPath =
       "$baseUrl/movie/now_playing?api_key=$apiKey";
 
-  static const String popularMoviesPath =
+  String newReleaseMoviesPath =
       "$baseUrl/movie/popular?api_key=$apiKey";
 
-  static const String topRatedMoviesPath =
+  String recomendedMoviesPath =
       "$baseUrl/movie/top_rated?api_key=$apiKey";
 
-  static const String baseImageUrl = "https://image.tmdb.org/t/p/w500";
+   String baseImageUrl = "https://image.tmdb.org/t/p/w500";
 
 
-  static String imageUrl(String path) => "$baseImageUrl$path";
+   String imageUrl(String path) => "$baseImageUrl$path";
 
   Future<List<HomeMoviesModel>> fetchData() async{
     final respone = await Dio().get(nowPlayingMoviesPath);
@@ -31,6 +33,31 @@ class FetchData{
     if (respone.statusCode == 200) {
       return List<HomeMoviesModel>.from(
           (respone.data["results"] ?? [] as List).map((e) => HomeMoviesModel.fromJson(e)));
+    } else {
+      throw Text("Sorry");
+    }
+
+  }
+
+  Future<List<NewReleaseMoviesModel>> fetchNewReleaseMoviesData() async{
+    final respone = await Dio().get(newReleaseMoviesPath);
+
+    if (respone.statusCode == 200) {
+      return List<NewReleaseMoviesModel>.from(
+          (respone.data["results"] ?? [] as List).map((e) => NewReleaseMoviesModel.fromJson(e)));
+    } else {
+      throw Text("Sorry");
+    }
+
+  }
+
+
+  Future<List<RecomendedMoviesModel>> fetchRecomendedMoviesData() async{
+    final respone = await Dio().get(recomendedMoviesPath);
+
+    if (respone.statusCode == 200) {
+      return List<RecomendedMoviesModel>.from(
+          (respone.data["results"] ?? [] as List).map((e) => RecomendedMoviesModel.fromJson(e)));
     } else {
       throw Text("Sorry");
     }
