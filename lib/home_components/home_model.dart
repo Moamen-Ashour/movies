@@ -1,6 +1,6 @@
 
 
-class HomeMoviesModel{
+class HomeMoviesModel {
 
   final int id;
   final String title;

@@ -13,6 +13,8 @@ class FetchData{
 
   static const String apiKey = "2618ec0ea1cf82decc08f94d2be8f6a5";
 
+  // static const String query = "";
+
    String nowPlayingMoviesPath =
       "$baseUrl/movie/now_playing?api_key=$apiKey";
 
@@ -27,7 +29,8 @@ class FetchData{
 
    String imageUrl(String path) => "$baseImageUrl$path";
 
-  Future<List<HomeMoviesModel>> fetchData() async{
+  Future<List<HomeMoviesModel>> fetchData() async {
+
     final respone = await Dio().get(nowPlayingMoviesPath);
 
     if (respone.statusCode == 200) {
@@ -36,6 +39,23 @@ class FetchData{
     } else {
       throw Text("Sorry");
     }
+  }
+
+
+  Future<List<HomeMoviesModel>> searchMovies(String query) async {
+
+    String searchMoviesPath =
+        "$baseUrl/search/movie?api_key=$apiKey&query=$query";
+
+    final respone = await Dio().get(searchMoviesPath);
+    if (respone.statusCode == 200) {
+      return List<HomeMoviesModel>.from(
+          (respone.data["results"] ?? [] as List).map((e) => HomeMoviesModel.fromJson(e)));
+
+    } else {
+      throw Text("Sorry");
+    }
+
 
   }
 

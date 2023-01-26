@@ -13,7 +13,7 @@
 //
 // class HomeServices extends BaseHomeMovies{
 //
-//   static const String baseUrl = "https://api.themoviedb.org/3";
+
 //
 //   static const String apiKey = "2618ec0ea1cf82decc08f94d2be8f6a5";
 //
