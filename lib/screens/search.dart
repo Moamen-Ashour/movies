@@ -6,15 +6,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:dotted_border/dotted_border.dart';
 import '../home_components/fetch_data_from_api.dart';
 import '../home_components/home_model.dart';
 import '../search_components/search_text_field.dart';
 import '../utils/app_colors.dart';
 
 class Search extends StatefulWidget {
+
+  // ToDo : problem with bottom size should fix it
 
   static const String routeName = "search";
 
@@ -24,15 +27,11 @@ class Search extends StatefulWidget {
 
 class _SearchState extends State<Search> {
   var controller = TextEditingController();
-  String baseUrl = "https://api.themoviedb.org/3";
-
-  String apiKey = "2618ec0ea1cf82decc08f94d2be8f6a5";
-
-
 
   String query = "";
 
   List<HomeMoviesModel> movies = [];
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +74,9 @@ class _SearchState extends State<Search> {
                   future: fetchData.searchMovies(query),
                   builder: (context, snapshot) {
                     List<HomeMoviesModel>? movie = snapshot.data;
-                    if (snapshot.data == null ||
-                        snapshot.data == ConnectionState.waiting) {
+                    if (snapshot.data == null){
+                      return Lottie.asset("assets/json/icons/search_state_null.json");
+                    }else if(snapshot.data == ConnectionState.waiting) {
                       return Center(child: CircularProgressIndicator(),);
                     }else if(snapshot.hasError){
                       return Center(child: Text("Something went wrong with popular api",style: TextStyle(color: Colors.red,fontSize: 30),));
@@ -88,44 +88,98 @@ class _SearchState extends State<Search> {
                           itemCount: snapshot.data?.length,
                           itemBuilder: (context, index) {
                             final movie2 = snapshot.data?[index];
+                            // String date = DateFormat('yyyy-MM-dd').format(movie2!.releaseDate);
                             return InkWell(
 
                               onTap: () {
                                 /// TODO : NAVIGATE TO  MOVIE DETAILS
                               },
-                              child: Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  border: Border.all(width: 5, color: Colors.white),
-                                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                                ),
-                                child: Padding(
-                                padding: EdgeInsets.all(15.0),
-                                child: Column(
-                                children: [
-                                   Expanded(
-                                     child: Row(
-                                       children: [
-                                         Image.network(fetchData.imageUrl(movie2!.backDropPath)),
-                                         Expanded(
-                                           child: Text(
-                                             movie2!.title,
-                                             textAlign: TextAlign.justify,
-                                             style: TextStyle(
-                                               fontSize: 10,
-                                               color: Colors.white,
-                                               fontWeight: FontWeight.w500,
-                                             ), //Textstyle
+                              child: Padding(
+                                padding:  EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 3, color: Colors.white),
+                                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                                  ),
+                                  child: Padding(
+                                  padding: EdgeInsets.all(15.0),
+                                  child: Column(
+                                  children: [
+                                     Expanded(
+                                       child: Row(
+                                         children: [
+                                           DottedBorder(
+                                             borderType: BorderType.RRect,
+                                             radius: Radius.circular(10),
+                                             // padding: EdgeInsets.all(6),
+                                             dashPattern: [6, 3, 2, 3],
+                                             strokeWidth: 2,
+                                             color: Colors.white,
+                                             child: Container(
+                                               height: 150,
+                                               width: 120,
+                                               // decoration: BoxDecoration(
+                                               //   border: Border.all(width: 2, color: Colors.white70),
+                                               //   borderRadius: BorderRadius.circular(10),
+                                               // ),
+                                               child:  Image.network(fetchData.imageUrl(movie2!.backDropPath),fit: BoxFit.cover,),
+                                             ),
                                            ),
-                                         ),
-                                       ],
+                                           Expanded(
+                                             child: Column(
+                                               mainAxisAlignment: MainAxisAlignment.center,
+                                               children: [
+                                                 Text(
+                                                   movie2!.title,
+                                                   textAlign: TextAlign.justify,
+                                                   style: TextStyle(
+                                                     fontSize: 10,
+                                                     color: Colors.white,
+                                                     fontWeight: FontWeight.bold,
+                                                   ), //Textstyle
+                                                 ),
+                                                 Spacer(),
+                                                 Text(
+                                                   // date,
+                                                    movie2.releaseDate.split('-')[0],
+                                                   textAlign: TextAlign.justify,
+                                                   style: TextStyle(
+                                                     fontSize: 10,
+                                                     color: Colors.white,
+                                                     fontWeight: FontWeight.w500,
+                                                   ), //Textstyle
+                                                 ),
+                                                 Spacer(),
+                                                 Row(
+                                                   mainAxisAlignment: MainAxisAlignment.center,
+                                                   children: [
+                                                     Icon(Icons.star,color: Colors.yellowAccent,),
+                                                     SizedBox(width: 3,),
+                                                     Text(
+                                                       // date,
+                                                       "${movie2.voteAverage}",
+                                                       textAlign: TextAlign.justify,
+                                                       style: TextStyle(
+                                                         fontSize: 10,
+                                                         color: Colors.white,
+                                                         fontWeight: FontWeight.w500,
+                                                       ), //Textstyle
+                                                     ),
+                                                   ],
+                                                 ),
+                                               ],
+                                             ),
+                                           ),
+                                         ],
+                                       ),
                                      ),
-                                   ),
-                                ]
-                                      ),
-                                    )
-                            )
+                                  ]
+                                        ),
+                                      )
+                            ),
+                              )
                             );
                           
                             },

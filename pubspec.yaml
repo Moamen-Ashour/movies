@@ -42,10 +42,12 @@ dependencies:
   animate_do: ^3.0.2
   cached_network_image: ^3.2.3
   carousel_slider: ^4.2.1
+  intl: ^0.17.0
   http: ^0.13.5
   shimmer: ^2.0.0
   lottie: ^2.2.0
   expansion_tile_card: ^2.0.0
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:

@@ -3,6 +3,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:movie_application/home_components/home_model.dart';
 import 'package:movie_application/home_components/popular_model.dart';
 import 'package:movie_application/home_components/recomended_model.dart';
@@ -28,6 +29,14 @@ class FetchData{
 
 
    String imageUrl(String path) => "$baseImageUrl$path";
+
+  String convertDateTimeDisplay(String date) {
+    final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
+    final DateFormat serverFormater = DateFormat('yyyy');
+    final DateTime displayDate = displayFormater.parse(date);
+    final String formatted = serverFormater.format(displayDate);
+    return formatted;
+  }
 
   Future<List<HomeMoviesModel>> fetchData() async {
 
