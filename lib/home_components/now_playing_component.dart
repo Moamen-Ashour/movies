@@ -8,6 +8,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_application/home_components/category_model.dart';
 import 'package:movie_application/home_components/home_model.dart';
 import '../home_components/fetch_data_from_api.dart';
 import '../utils/api_services.dart';
@@ -20,6 +21,8 @@ class NowPlayingComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
 
     FetchData fetchData = FetchData();
     return  FutureBuilder(

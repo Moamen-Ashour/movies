@@ -8,6 +8,8 @@ import 'package:movie_application/home_components/home_model.dart';
 import 'package:movie_application/home_components/popular_model.dart';
 import 'package:movie_application/home_components/recomended_model.dart';
 
+import 'category_model.dart';
+
 class FetchData{
 
   static const String baseUrl = "https://api.themoviedb.org/3";
@@ -15,6 +17,8 @@ class FetchData{
   static const String apiKey = "2618ec0ea1cf82decc08f94d2be8f6a5";
 
   // static const String query = "";
+
+
 
    String nowPlayingMoviesPath =
       "$baseUrl/movie/now_playing?api_key=$apiKey";
@@ -29,6 +33,7 @@ class FetchData{
 
 
    String imageUrl(String path) => "$baseImageUrl$path";
+
 
   String convertDateTimeDisplay(String date) {
     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');
