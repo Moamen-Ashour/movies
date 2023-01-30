@@ -8,8 +8,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_application/home_components/category_model.dart';
 import 'package:movie_application/home_components/home_model.dart';
 import '../home_components/fetch_data_from_api.dart';
+import '../screens/movie_details.dart';
 import '../utils/api_services.dart';
 import '../utils/app_colors.dart';
 
@@ -21,18 +23,20 @@ class NowPlayingComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
+
     FetchData fetchData = FetchData();
-    return  FutureBuilder(
-            future: fetchData.fetchData(),
-            builder: (context,snapshot) {
-              List<HomeMoviesModel>? movie = snapshot.data;
-              if (snapshot.data == null ||
-                  snapshot.data == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator(),);
-              }else if(snapshot.hasError){
-                return Center(child: Text("Something went wrong with now playing api",style: TextStyle(color: Colors.red,fontSize: 30),));
-              }
-              else {
+      return  FutureBuilder(
+              future: fetchData.fetchData(),
+              builder: (context,snapshot) {
+                List<HomeMoviesModel>? movie = snapshot.data;
+                if (snapshot.data == null ||
+                    snapshot.data == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator(),);
+                }else if(snapshot.hasError){
+                  return Center(child: Text("Something went wrong with now playing api",style: TextStyle(color: Colors.red,fontSize: 30),));
+                }
+                else {
                 return   FadeIn(
                   duration: const Duration(milliseconds: 500),
                   child: CarouselSlider(
@@ -44,9 +48,11 @@ class NowPlayingComponent extends StatelessWidget {
                     items: snapshot.data?.map(
                           (item) {
                         return GestureDetector(
-                          key: const Key('openMovieMinimalDetail'),
+                          key: Key('openMovieMinimalDetail'),
                           onTap: () {
-                            /// TODO : NAVIGATE TO MOVIE DETAILS
+                            Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> Movie_Details(movieId: item.id)
+                            )
+                            );
                           },
                           child: Stack(
                             children: [

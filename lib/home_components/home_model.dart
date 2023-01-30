@@ -1,6 +1,8 @@
 
 
-class HomeMoviesModel{
+import 'category_model.dart';
+
+class HomeMoviesModel {
 
   final int id;
   final String title;
@@ -21,6 +23,7 @@ class HomeMoviesModel{
 
   factory HomeMoviesModel.fromJson(Map<String , dynamic> json) => HomeMoviesModel(
     id:json["id"],
+    // genres:List.from(json["genre_ids"].map((x)=>CategoryModel.fromJson(x))),
     title:json["title"],
     backDropPath:json["backdrop_path"],
     overview:json["overview"],

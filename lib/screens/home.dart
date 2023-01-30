@@ -83,8 +83,7 @@ class Home extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Movie_Details()));
+
 
               },
               child: Padding(
