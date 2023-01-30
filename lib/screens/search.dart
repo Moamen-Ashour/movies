@@ -15,6 +15,7 @@ import '../home_components/fetch_data_from_api.dart';
 import '../home_components/home_model.dart';
 import '../search_components/search_text_field.dart';
 import '../utils/app_colors.dart';
+import 'movie_details.dart';
 
 class Search extends StatefulWidget {
 
@@ -93,7 +94,9 @@ class _SearchState extends State<Search> {
                             return InkWell(
 
                               onTap: () {
-                                /// TODO : NAVIGATE TO  MOVIE DETAILS
+                                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> Movie_Details(movieId: movie2.id)
+                                )
+                                );
                               },
                               child: Container(
                                 height: 100,

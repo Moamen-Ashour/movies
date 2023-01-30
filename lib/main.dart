@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       routes: {
         Layout.routeName :(context) =>  Layout(),
         Home.routeName :(context) =>  Home(),
-        Movie_Details.routeName :(context) =>  Movie_Details(),
+        // Movie_Details.routeName :(context) =>  Movie_Details(movieId: ),
         Search.routeName :(context) =>  Search(),
         Browse.routeName :(context) =>  Browse(),
         WatchList.routeName :(context) =>  WatchList(),

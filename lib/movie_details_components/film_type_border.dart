@@ -22,7 +22,7 @@ class FilmTypeBorder extends StatelessWidget {
       child: Center(
         child: Text(
           filmeType,style: TextStyle(
-            color: Colors.grey,fontSize: 10
+            color: Colors.grey,fontSize: 8
         ),),
       ),
     );

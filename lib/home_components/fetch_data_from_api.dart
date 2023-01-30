@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:movie_application/home_components/home_model.dart';
 import 'package:movie_application/home_components/popular_model.dart';
 import 'package:movie_application/home_components/recomended_model.dart';
+import 'package:movie_application/movie_details_components/movie_details_model.dart';
 
 import 'category_model.dart';
 
@@ -18,7 +19,8 @@ class FetchData{
 
   // static const String query = "";
 
-
+  String categoriesMoviesPath =
+      "$baseUrl/genre/movie/list?api_key=$apiKey";
 
    String nowPlayingMoviesPath =
       "$baseUrl/movie/now_playing?api_key=$apiKey";
@@ -29,11 +31,37 @@ class FetchData{
   String recomendedMoviesPath =
       "$baseUrl/movie/top_rated?api_key=$apiKey";
 
-   String baseImageUrl = "https://image.tmdb.org/t/p/w500";
+
+  String MoviesDetailsPath(int movieId) =>
+      "$baseUrl/movie/$movieId?api_key=$apiKey";
+
+  String baseImageUrl = "https://image.tmdb.org/t/p/w500";
+
+
+   Future<MoviesDetailModel> getMovieDetails(int MovieId) async {
+     final respone = await Dio().get(MoviesDetailsPath(MovieId));
+     if (respone.statusCode == 200) {
+       // print(MoviesDetailModel.fromJson(respone.data));
+      return   MoviesDetailModel.fromJson(respone.data);
+     } else {
+       throw Text("Sorry");
+     }
+   }
 
 
    String imageUrl(String path) => "$baseImageUrl$path";
 
+  Future<List<CategoryModel>> fetchCategoriesData() async{
+    final respone = await Dio().get(categoriesMoviesPath);
+
+    if (respone.statusCode == 200) {
+      return List<CategoryModel>.from(
+          (respone.data["genres"] ?? [] as List).map((e) => CategoryModel.fromJson(e)));
+    } else {
+      throw Text("Sorry");
+    }
+
+  }
 
   String convertDateTimeDisplay(String date) {
     final DateFormat displayFormater = DateFormat('yyyy-MM-dd HH:mm:ss.SSS');

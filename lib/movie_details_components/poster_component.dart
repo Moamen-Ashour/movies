@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class PosterComponent extends StatefulWidget {
 
   bool  isPressed;
-
-  PosterComponent(this.isPressed);
+  String image;
+  PosterComponent(this.isPressed,this.image);
 
   @override
   State<StatefulWidget> createState() {
@@ -22,10 +22,12 @@ class _PosterComponentState extends State<PosterComponent> {
       children: [
         Container(
           margin: EdgeInsets.all(5),
-          child: Image.asset(
-            'assets/images/image_video_detals@2x.png',
+          child: Image.network(
+            widget.image,
+          fit: BoxFit.fill,
           ),
           width: 100,
+          height: 150,
         ),
         SizedBox(
           height: 1,
