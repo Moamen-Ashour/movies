@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_application/home_components/recomended_model.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../screens/movie_details.dart';
 import 'fetch_data_from_api.dart';
 
 class RecomendedMoviesComponent  extends StatelessWidget {
@@ -39,7 +40,9 @@ class RecomendedMoviesComponent  extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8.0),
                       child: InkWell(
                         onTap: () {
-                          /// TODO : NAVIGATE TO  MOVIE DETAILS
+                          Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=> Movie_Details(movieId: movie2.id)
+                          )
+                          );
                         },
                         child: ClipRRect(
                           borderRadius: const BorderRadius.all(Radius.circular(8.0)),

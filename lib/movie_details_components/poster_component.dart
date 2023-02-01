@@ -1,10 +1,18 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_application/screens/watchlist.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PosterComponent extends StatefulWidget {
 
+  String title;
+  int id;
+  String overView;
   bool  isPressed;
   String image;
-  PosterComponent(this.isPressed,this.image);
+
+
+  PosterComponent(this.title, this.id, this.isPressed, this.image,this.overView);
 
   @override
   State<StatefulWidget> createState() {
@@ -15,6 +23,16 @@ class PosterComponent extends StatefulWidget {
 
 class _PosterComponentState extends State<PosterComponent> {
 
+  late DatabaseReference dbRef;
+
+  bool isPressed = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dbRef = FirebaseDatabase.instance.ref().child("Movie");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,50 +40,50 @@ class _PosterComponentState extends State<PosterComponent> {
       children: [
         Container(
           margin: EdgeInsets.all(5),
+          width: 100,
+          height: 150,
           child: Image.network(
             widget.image,
           fit: BoxFit.fill,
           ),
-          width: 100,
-          height: 150,
         ),
-        SizedBox(
-          height: 1,
-          width: 1,
-          child: Stack(
-            alignment: Alignment.topLeft,
-            children: [
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  child:  Icon(
-                    Icons.bookmark,
-                    size: 32,
-                    color: Colors.grey,
-                  ),
-                ),
+        Positioned(
+           top: -3,
+          child: IconButton(onPressed: () async{
+
+
+
+            if(isPressed == true){
+              setState(() {
+                isPressed = !isPressed;
+                Map<String,String> movie={
+                  'title' : widget.title,
+                  'image' : widget.image,
+                  'overview' : widget.overView.toString(),
+                  'id'    : widget.id.toString(),
+
+                };
+                dbRef.push().set(movie);
+              });
+
+            }else{
+              isPressed == false;
+            }
+
+          }, icon: Container(
+            height: double.infinity,
+              decoration: BoxDecoration(
+                // border: Border.all(color: Colors.white, width: 5), <--- remove this
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
+                  color: Colors.grey
               ),
-              Align(
-                alignment: Alignment.center,
-                child: Container(
-                  child: IconButton(
-                    onPressed:(){
-                      setState(() {
-                        widget.isPressed = !widget.isPressed;
-                      });
-                    },
-                    // To Do Action
-                    // need to add it into provider
-                    icon: widget.isPressed == false ? Icon(Icons.check,color: Colors.yellowAccent,) :Icon(Icons.add,color: Colors.white,),
-                    iconSize: 15,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ],
+              child: Icon(isPressed == false ?Icons.check : Icons.add ,color: Colors.white,)),
+
           ),
         ),
       ],
     );
   }
+
+
 }
