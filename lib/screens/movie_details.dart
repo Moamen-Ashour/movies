@@ -3,11 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_application/movie_details_components/movie_details_model.dart';
 import 'package:movie_application/utils/app_colors.dart';
+import 'package:video_player/video_player.dart';
 
 import '../home_components/category_model.dart';
 import '../home_components/fetch_data_from_api.dart';
+import '../home_components/recomended_movies_component.dart';
 import '../layout/container.dart';
 import '../movie_details_components/film_type_border.dart';
 import '../movie_details_components/like_this_component.dart';
@@ -17,10 +20,16 @@ import '../movie_details_components/movie_details_model.dart';
 import '../movie_details_components/movie_details_model.dart';
 import '../movie_details_components/movie_details_model.dart';
 import '../movie_details_components/poster_component.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../movie_details_components/poster_like_this_component.dart';
+import '../other_components/recomended_component/recomended_component.dart';
 
 class Movie_Details extends StatefulWidget {
   static const String routeName = "movieDetails";
+
+  final vieoUrl = "https://www.youtube.com/watch?v=cqGjhVJWtEg";
+
+
 
   final int movieId;
 
@@ -31,11 +40,16 @@ class Movie_Details extends StatefulWidget {
 }
 
 class _Movie_DetailsState extends State<Movie_Details> {
+
+
   bool  isPressed = true;
 
   var fetchData = FetchData();
 
+
+
   double rating = 0;
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +123,7 @@ class _Movie_DetailsState extends State<Movie_Details> {
                         width: 20,
                         // height: ,
                       ),
-                      PosterComponent(isPressed,fetchData.imageUrl(movie!.backdropPath)),
+                      PosterComponent(movie.title,movie.id,isPressed,fetchData.imageUrl(movie!.backdropPath),movie.overView),
                       //Action
                       Expanded(
                         child: Column(
@@ -178,64 +192,58 @@ class _Movie_DetailsState extends State<Movie_Details> {
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "More Like This",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
                   Container(
-                    width: double.infinity,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.zero),
-                      //   color: Color.fromRGBO(
-                      //   54,
-                      //   55,
-                      //  54,
-                      // 1.0,
-                      //      ),
-                    ),
-
-                    child: Expanded(
-                      flex: 5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              LikeThisComponent(isPressed),
-                              LikeThisComponent(isPressed),
-                              LikeThisComponent(isPressed)
-                              // ContainerDeadPool(),
-                              // ContainerDeadPool(),
-                              // ContainerDeadPool(),
-                            ],
+                    margin: const EdgeInsets.fromLTRB(16.0, 24.0, 16.0, 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "More Like This",
+                          style: GoogleFonts.poppins(
+                            fontSize: 19,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.15,
                           ),
-                        ],
-                      ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (BuildContext context) => RecomendedScreen()));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: seeMore('See More '),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-
+                  RecomendedMoviesComponent(),
                 ],
               ),
             );
           }
-
-          // return ListView.builder(
-          //     itemCount: movie?.length,
-          //     itemBuilder: (context, index) {
-          //       return Text(movie![index].title);
-          //     }
-          // );
         }
     );
+  }
 
+
+  Row seeMore(String word){
+    return  Row(
+      children:  [
+        Text(word,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        Icon(
+          Icons.arrow_forward_ios,
+          size: 16.0,
+          color: Colors.white,
+        )
+      ],
+    );
   }
 
   Set<String?> showGenres(List<CategoryModel> genres) {
@@ -282,3 +290,4 @@ class _Movie_DetailsState extends State<Movie_Details> {
     return rating;
   }
 }
+

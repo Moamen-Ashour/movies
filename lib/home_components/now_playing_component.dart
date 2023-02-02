@@ -87,27 +87,6 @@ class NowPlayingComponent extends StatelessWidget {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(bottom: 16.0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          const Icon(
-                                            Icons.circle,
-                                            color: Colors.redAccent,
-                                            size: 16.0,
-                                          ),
-                                          const SizedBox(width: 4.0),
-                                          Text(
-                                            'Now Playing'.toUpperCase(),
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 16.0),
                                       child: Text(
                                         item.title!,
                                         textAlign: TextAlign.center,

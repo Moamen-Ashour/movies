@@ -24,6 +24,7 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return  Scaffold(
+      backgroundColor: Colors.black,
     body: ListView(
     children: <Widget>[
     NowPlayingComponent(),
@@ -36,7 +37,7 @@ class Home extends StatelessWidget {
               "New Release",
               style: GoogleFonts.poppins(
                 fontSize: 19,
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.15,
               ),
@@ -44,7 +45,7 @@ class Home extends StatelessWidget {
             InkWell(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => NewReleaseScreen()));
+                    MaterialPageRoute(builder: (BuildContext context) => NewReleaseScreen()));
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -52,12 +53,13 @@ class Home extends StatelessWidget {
                   children: const [
                     Text('See More',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 16.0,
+                      color: Colors.white,
                     )
                   ],
                 ),
@@ -76,15 +78,15 @@ class Home extends StatelessWidget {
               "Recomended",
               style: GoogleFonts.poppins(
                 fontSize: 19,
-                color: Colors.black,
+                color: Colors.white,
                 fontWeight: FontWeight.w500,
                 letterSpacing: 0.15,
               ),
             ),
             InkWell(
               onTap: () {
-
-
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (BuildContext context) => RecomendedScreen()));
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -92,11 +94,12 @@ class Home extends StatelessWidget {
                   children: const [
                     Text('See More',
                       style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.white,
                       ),),
                     Icon(
                       Icons.arrow_forward_ios,
                       size: 16.0,
+                      color: Colors.white,
                     )
                   ],
                 ),

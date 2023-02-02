@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_application/screens/browse.dart';
 import 'package:movie_application/screens/home.dart';
@@ -7,7 +8,9 @@ import 'package:movie_application/screens/watchlist.dart';
 
 import 'layout/layout.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp( MyApp());
 }
 
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
         // Movie_Details.routeName :(context) =>  Movie_Details(movieId: ),
         Search.routeName :(context) =>  Search(),
         Browse.routeName :(context) =>  Browse(),
-        WatchList.routeName :(context) =>  WatchList(),
+        WatchList.routeName :(context) =>  WatchList(id:0,title:"name"),
       },
     );
   }

@@ -24,7 +24,7 @@ class _LayoutState extends State<Layout> {
    Home(), //  Movie_Details screen we will show it after select a movie on Home screen
    Search(),
    Browse(),
-   WatchList(),
+   WatchList(id: 0,title: "name2",),
   ];
 
   @override
