@@ -205,17 +205,17 @@ class _NewReleaseScreenState extends State<NewReleaseScreen> {
     if(rating > 8){
       rating = 8;
     }
-    else if(rating<=8&&rating>7.5){
-      rating = 7.5;
+    else if(rating<=8&&rating>=7.5){
+      rating = 7;
     }else if(rating<=7.4&&rating>7){
       rating = 7;
-    }else if(rating<=7&&rating>6.5){
-      rating = 6.5;
+    }else if(rating<=7&&rating>=6.5){
+      rating = 6;
     }
     else if(rating<=6.4&&rating>6){
       rating = 6;
-    }else if(rating<=6&&rating>5.5){
-      rating = 5.5;
+    }else if(rating<=6&&rating>=5.5){
+      rating = 5;
     }else if(rating<=5.4&&rating>5){
       rating = 5;
     }else{
